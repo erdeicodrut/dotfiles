@@ -1,0 +1,220 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "idle_inhibitor",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "disk",
+    "memory",
+    "cpu",
+    "temperature#cpu",
+    "custom/gpu-detailed"
+  ],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon} {windows}",
+    "format-icons": {
+      "active": "󱓻"
+    },
+    "persistent-workspaces": {
+      "*": 13
+    },
+    "window-rewrite": {
+      "class<chromium>": "",
+      "alacritty": "",
+      "code": "󰨞",
+      "scrcpy": "󰓷",
+      "title<neovim.*>": "",
+      "title<vim>": "",
+      "title<^nvim .*>": "",
+      "title<^vim .*>": "",
+      "title<.*nvim.*>": "",
+      "title<.*vim.*>": "",
+      "title<^ranger.*>": "",
+      "title<^mc.*>": "",
+      "title<^tmux.*>": "",
+      "title<^ssh .*>": "",
+      "title<.*@.*:.*>": "",
+      "class<firefox>": "",
+      "class<google-chrome>": "",
+      "class<tor-browser>": "",
+      "class<Alacritty>": "",
+      "class<kitty>": "",
+      "class<foot>": "",
+      "class<termite>": "",
+      "class<gnome-terminal>": "",
+      "class<konsole>": "",
+      "class<xterm>": "",
+      "class<st>": "",
+      "class<wezterm>": "",
+      "class<neovim>": "",
+      "class<vim>": "",
+      "class<jetbrains-*>": "",
+      "class<intellij>": "",
+      "class<thunar>": "",
+      "class<nautilus>": "",
+      "class<dolphin>": "",
+      "class<pcmanfm>": "",
+      "class<ranger>": "",
+      "class<nemo>": "",
+      "class<vlc>": "",
+      "class<mpv>": "",
+      "class<audacity>": "",
+      "class<obs>": "",
+      "class<whatsapp>": "",
+      "class<zoom>": "",
+      "class<docker>": "",
+      "class<htop>": "",
+      "class<btop>": "",
+      "class<system-monitor>": "",
+      "class<gparted>": "",
+      "class<virt-manager>": "",
+      "title<.*youtube.*>": "",
+      "class<firefox> title<.*youtube.*>": "",
+      "class<chromium> title<.*youtube.*>": "",
+      "title<.*\\.go.*>": "",
+      "title<.*flutter.*>": "",
+      "title<.*dart.*>": "",
+      "class<android-studio> title<.*flutter.*>": "",
+      "class<code> title<.*\\.go.*>": "",
+      "class<code> title<.*flutter.*>": "",
+      ".*": ""
+    },
+    "disable-scroll": false,
+    "smooth-scrolling-threshold": 1.0,
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+  },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": {},
+    "icon-theme": "${i_theme}",
+    "spacing": 0,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "on-click-right": "fullscreen"
+  },
+  "custom/gpu-detailed": {
+    "exec": "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,noheader,nounits | awk -F', ' '{printf \"󰾲 %2d%% %2d°C \", $1, $2}'",
+    "format": "{}",
+    "interval": 1,
+    "tooltip": true,
+    "on-click": "alacritty --title waybar-alacritty -e btop",
+    "return-type": ""
+  },
+  "cpu": {
+    "format": " {usage:>2}%",
+    "interval": 1,
+    "max-length": 10,
+    "on-click": "alacritty --title waybar-alacritty -e btop"
+  },
+  "temperature#cpu": {
+    "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input",
+    "format": "{temperatureC:>2}°C",
+    "critical-threshold": 85,
+    "format-critical": "{temperatureC:>2}°C",
+    "interval": 1,
+    "tooltip-format": "CPU: {temperatureC:>2}°C"
+  },
+  "temperature": {
+    "hwmon-path": [
+      "/sys/class/hwmon/hwmon0/temp1_input",
+      "/sys/class/hwmon/hwmon1/temp1_input",
+      "/sys/class/thermal/thermal_zone0/temp"
+    ],
+    "format": "{temperatureC:>2}°C",
+    "critical-threshold": 80,
+    "format-critical": "{temperatureC:>2}°C ",
+    "interval": 10
+  },
+  "disk": {
+    "interval": 1,
+    "format": " {percentage_used:>2}%",
+    "path": "/",
+    "on-click": "alacritty --title waybar-alacritty -e btop"
+  },
+  "memory": {
+    "interval": 1,
+    "format": " {:>2}%",
+    "max-length": 10,
+    "on-click": "alacritty --title waybar-alacritty -e btop"
+  },
+  "clock": {
+    "format": "{:%a %d %B %H:%M}",
+    "format-alt": "{:%d %B W%V %Y}",
+    "tooltip": false
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon} ⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes}",
+    "format-wifi": "{icon} ⇣{bandwidthDownBytes:>10} ⇡{bandwidthUpBytes:>10}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰖪",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes} ⇡{bandwidthUpBytes}\n{ipaddr}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 1,
+    "nospacing": 1,
+    "on-click": "alacritty --class=Impala -e impala"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "GTK_THEME=Adwaita-dark blueberry"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}",
+    "on-click": "GTK_THEME=Adwaita-dark pavucontrol",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "󰝟",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "tray",
+      "idle_inhibitor"
+    ]
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰛐",
+      "deactivated": "󰛑"
+    },
+    "tooltip": true
+  }
+}

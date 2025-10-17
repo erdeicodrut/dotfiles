@@ -1,0 +1,35 @@
+#!/bin/bash
+# ~/.config/yabai/toggle_padding.sh
+
+PADDING_VALUE="$1"
+
+# If no argument provided, default to 100
+if [ -z "$PADDING_VALUE" ]; then
+  PADDING_VALUE=100
+fi
+
+# Get current space index
+CURRENT_SPACE=$(yabai -m query --spaces --space | jq '.index')
+
+# Check if it's a percentage
+if [[ "$PADDING_VALUE" == *% ]]; then
+  # Get screen width
+  SCREEN_WIDTH=$(yabai -m query --displays --display | jq '.frame.w')
+  # Extract percentage number and calculate
+  PERCENT=$(echo "$PADDING_VALUE" | sed 's/%//')
+  PADDING_VALUE=$(echo "scale=0; $SCREEN_WIDTH * $PERCENT / 100" | bc)
+fi
+
+# Get current padding for this space
+CURRENT_PADDING=$(yabai -m config --space "$CURRENT_SPACE" left_padding)
+
+# Toggle logic
+if [ "$CURRENT_PADDING" -eq 6 ]; then
+  yabai -m config --space "$CURRENT_SPACE" left_padding "$PADDING_VALUE"
+  yabai -m config --space "$CURRENT_SPACE" right_padding "$PADDING_VALUE"
+  echo "Padding set to $PADDING_VALUE on space $CURRENT_SPACE"
+else
+  yabai -m config --space "$CURRENT_SPACE" left_padding 6
+  yabai -m config --space "$CURRENT_SPACE" right_padding 6
+  echo "Padding set to 0 on space $CURRENT_SPACE"
+fi

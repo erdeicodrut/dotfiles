@@ -1,0 +1,305 @@
+let mapleader=" "
+
+""" Plugins  --------------------------------
+Plug 'easymotion/vim-easymotion'	" Requires IdeaVim-EasyMotion. Lots of mappings
+Plug 'kana/vim-textobj-entire'		" entire buffer text object: ae
+Plug 'machakann/vim-highlightedyank'
+Plug 'terryma/vim-multiple-cursors'	" See below for remapped keys. <A-n> doesn't work on Macs
+Plug 'tommcdo/vim-exchange'		    " cx{motion} to select, again to exchange
+Plug 'tpope/vim-commentary'		    " [count]gc{motion}, o_gc, v_gc, gcc
+Plug 'tpope/vim-surround'		    " ys, cs, ds, S
+Plug 'vim-scripts/argtextobj.vim'	    " argument text objects: aa, ia
+Plug 'vim-scripts/ReplaceWithRegister'  " [count][{reg}]gr{motion}, [count][{reg}]grr, {Visual}[{reg}]gr
+
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+set number relativenumber
+set scrollOff=12
+
+" This makes clipboard and yanking the same
+set clipboard+=unnamed
+set expandtab                   " expand tabs to spaces by default
+set smartindent
+set so=20 " Keep cursor centered
+set hlsearch
+set incsearch " Incrementally search while typing
+set ignorecase " Use smart case for searching
+set smartcase
+
+
+setglobal matchpairs+=<:>
+
+
+" mute sound
+set belloff=all
+set visualbell
+set t_vb=
+
+" delete without yanking
+noremap <leader>d "_d
+noremap c "_c
+noremap C "_C
+noremap s "_s
+noremap S "_S
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+
+
+" replace currently selected text with default register without yanking it
+vnoremap <leader>p "_dP
+
+noremap H _
+noremap L $
+
+nnoremap <leader>j J
+vnoremap <leader>j J
+
+set idearefactormode=keep
+set NERDTree
+set ideamarks
+set highlightedyank
+set keep-english-in-normal
+
+
+
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" <C-n> seems to me as a better solution than <M-n>,
+" but we should finally support vim-visual-multi because vim-multiple-cursors is deprecated now
+map <C-n> <Plug>NextWholeOccurrence
+
+""" Common settings -------------------------
+set showmode
+" set so=12
+set nu
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+
+""" My Mappings -----------------------------
+
+map <leader>d <Action>(Debug)
+map <leader>rn <Action>(RenameElement)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>s <Action>(SelectInProjectView)
+map <leader>a <Action>(Annotate)
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+map <S-Space> <Action>(GotoNextError)
+
+" Reformat the current line only
+map <leader>f <Action>(ReformatCode)
+
+map <leader>b <Action>(ToggleLineBreakpoint)
+map <leader>o <Action>(FileStructurePopup)
+
+map <leader>J Ji <ESC>
+
+" Just makes me nervous
+map H h
+
+" Toggle case and start typing. E.g. `<leader>iget`: `property` -> `getProperty`
+map <leader>i ~hi
+" Remove selection and toggle case. E.g. `v2l<leader>u`: `getProperty` -> `property`
+vmap <leader>u d~h
+
+" I think it's a better solution
+map U <C-R>
+
+
+""" IdeaVim actions
+nmap [[ <Action>(MethodUp)
+nmap ]] <Action>(MethodDown)
+
+" Keys from vim-gitgutter
+nmap ]c <Action>(VcsShowNextChangeMarker)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+" Not from vim-gitgutter. ={motion} is for indenting. =c does nothing
+nmap =c <Action>(VcsShowCurrentChangeMarker)
+
+nmap ]e <Action>(GotoNextError)
+nmap [e <Action>(GotoPreviousError)
+
+" These don't work in Rider, annoyingly. Try HighlightUsagesInFile (see <leader>h below)
+nmap ]q <Action>(GotoNextElementUnderCaretUsage)
+nmap [q <Action>(GotoPrevElementUnderCaretUsage)
+
+nmap gb <Action>(Back)
+nmap gD <Action>(GotoTypeDeclaration)
+nmap gr <Action>(FindUsages)
+"map <leader>ff <Action>(Find)
+map <leader>ff <Action>(FindInPath)
+
+nmap gf <Action>(Forward)
+nmap gh <Action>(ShowHoverInfo)
+" nmap gl <Action>(QuickJavaDoc)
+nmap gL <Action>(QuickImplementations)
+" nmap gy <Action>(ShowErrorDescription)
+
+nmap <leader>b <Action>(ToggleLineBreakpoint)
+" Highlight usages, use CMD+G/Shift+CMD+G to iterate
+nmap <leader>h <Action>(HighlightUsagesInFile)
+nmap <leader>p <Action>(ParameterInfo)
+nmap <leader>q <Action>(ToggleRenderedDocPresentation)
+xmap <leader>r <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>s <Action>(ShowUsages)
+nmap <leader>t <Action>(TypeHierarchy)
+nmap <leader>u <Action>(FindUsages)
+nmap <leader>c <Action>(ShowIntentionActions)
+nmap <leader>w <Action>(ActiveToolwindowGroup)
+nmap <leader>x <Action>(HideAllWindows)
+
+xmap <S-j> <Action>(MoveLineDown)
+xmap <S-k> <Action>(MoveLineUp)
+
+
+map s <Action>(flash.search)
+
+map <leader>s <Action>(SelectInProjectView)
+
+
+nmap <S-l> <Action>(NextTab)
+nmap <S-h> <Action>(PreviousTab)
+
+
+
+sethandler <c-h> a:vim
+sethandler <c-l> a:vim
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+
+
+nmap <leader>bd <Action>(CloseEditor)
+nmap <leader>bo <Action>(CloseEditorsGroup)
+
+" Harpoon keybindings
+" Setting harpoons
+" nnoremap <leader><leader>2 :action SetHarpoon2<CR>
+" nnoremap <leader><leader>1 :action SetHarpoon1<CR>
+" nnoremap <leader><leader>3 :action SetHarpoon3<CR>
+" nnoremap <leader><leader>4 :action SetHarpoon4<CR>
+" nnoremap <leader><leader>5 :action SetHarpoon5<CR>
+" nnoremap <leader>u :action ShowHarpoon<CR>
+
+" Navigationing harpoons
+" noremap <leader>1 :action GotoHarpoon1<CR>
+" noremap <leader>2 :action GotoHarpoon2<CR>
+" noremap <leader>3 :action GotoHarpoon3<CR>
+" noremap <leader>4 :action GotoHarpoon4<CR>
+" noremap <leader>5 :action GotoHarpoon5<CR>
+"END Harpoon keybindings
+
+
+
+" Flutter remaps
+noremap <leader>w :action Flutter.ExtractWidget<CR>
+
+
+"mark as a global mark/
+nnoremap ma mA
+nnoremap mb mB
+nnoremap mc mC
+nnoremap md mD
+nnoremap me mE
+nnoremap mf mG
+nnoremap mh mH
+nnoremap mi mI
+nnoremap mj mJ
+nnoremap mk mK
+nnoremap ml mL
+nnoremap mm mM
+nnoremap mn mN
+nnoremap mo mO
+nnoremap mp mP
+nnoremap mq mQ
+nnoremap mr mR
+nnoremap ms mS
+nnoremap mt mT
+nnoremap mu mU
+nnoremap mv mV
+nnoremap mw mW
+nnoremap mx mX
+nnoremap my mY
+nnoremap mz mZ
+
+"go to global marks
+nnoremap 'a `A
+nnoremap 'b `B
+nnoremap 'c `C
+nnoremap 'd `D
+nnoremap 'e `E
+nnoremap 'f `G
+nnoremap 'h `H
+nnoremap 'i `I
+nnoremap 'j `J
+nnoremap 'k `K
+nnoremap 'l `L
+nnoremap 'm `M
+nnoremap 'n `N
+nnoremap 'o `O
+nnoremap 'p `P
+nnoremap 'q `Q
+nnoremap 'r `R
+nnoremap 's `S
+nnoremap 't `T
+nnoremap 'u `U
+nnoremap 'v `V
+nnoremap 'w `W
+nnoremap 'x `X
+nnoremap 'y `Y
+nnoremap 'z `Z
+
+
+
+
+
+
+nnoremap <leader><leader>p ^v$daprint('pa $O{pa}');
+
+" Might be interesting for later
+"
+" Use nmap for actions not noremap or nnoremap.
+" noremap <leader>a :action ToggleBookmark<CR>
+" noremap <leader>z :action GotoNextBookmark<CR>
+" noremap <leader>f :action GotoPreviousBookmark<CR>
+" noremap <leader>b :action ToggleLineBreakpoint<CR>
+" noremap <leader>e :action QuickEvaluateExpression<CR>
+" noremap <leader>g :action GithubCopyPathProvider<CR>
+" noremap <leader>i :action Annotate<CR>
+" noremap <leader>l :action SelectInProjectView<CR>
+" noremap <leader>q :action RefactoringMenu<CR>
+" noremap <leader>r :action RunClass<CR>
+" noremap <leader>d :action DebugClass<CR>
+" noremap <leader>hh :action SplitHorizontally<CR>
+" noremap <leader>h :action MoveTabDown<CR>
+" noremap <leader>vv :action SplitVertically<CR>
+" noremap <leader>v :action MoveTabRight<CR>
+" noremap <leader>c :action MaximizeEditorInSplit<CR>
+" noremap <leader>t :action PrevSplitter<CR>
+" noremap <leader>y :action NextSplitter<CR>
+" noremap <leader>m :action VcsShowPrevChangeMarker<CR>
+" noremap <leader>n :action VcsShowNextChangeMarker<CR>
+" noremap <leader>o :action MoveEditorToOppositeTabGroup<CR>
+" nnoremap <leader>w :action Unwrap<CR>
+" vnoremap <leader>w :action SurroundWith<CR>
+" nnoremap <leader><leader> mZ :action FindUsages<CR>
+" noremap U :action UnsplitAll<CR>
+" noremap u :action ExpandToLevel1<CR>
+" noremap [ :action MethodDown<CR>
+" noremap ] :action MethodUp<CR>
+"multiple action mapping 👇
+"":action ReformatCode  \| action RiderUnitTestRunSolutionAction<CR>
