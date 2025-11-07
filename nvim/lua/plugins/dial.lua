@@ -26,37 +26,7 @@ return {
           cyclic = true,
         }),
         augend.constant.new({
-          elements = { "True", "False" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
           elements = { "yes", "no" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
-          elements = { "on", "off" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
-          elements = { "left", "right" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
-          elements = { "up", "down" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
-          elements = { "enable", "disable" },
-          word = true,
-          cyclic = true,
-        }),
-        augend.constant.new({
-          elements = { "enabled", "disabled" },
           word = true,
           cyclic = true,
         }),

@@ -16,8 +16,10 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "plugins" },
     { import = "lazyvim.plugins.extras.lang.go" },
+    { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
+    { import = "lazyvim.plugins.extras.util.dot" },
+    { import = "plugins" },
   },
   defaults = {
     lazy = false,
@@ -39,19 +41,5 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
-  },
-  {
-    "ray-x/go.nvim",
-    dependencies = {
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("go").setup()
-    end,
-    event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
-    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
 })

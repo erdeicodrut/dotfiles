@@ -26,6 +26,13 @@ return {
       desc = "Buffers",
     },
     {
+      "<leader>;",
+      function()
+        Snacks.picker.buffers()
+      end,
+      desc = "Buffer Switcher",
+    },
+    {
       "<leader>/",
       function()
         Snacks.picker.lines()
@@ -273,99 +280,6 @@ return {
         Snacks.rename.rename_file()
       end,
       desc = "Rename File",
-    },
-
-    -- Grep in Dart files (lib/ directory) - excluding generated files
-    {
-      "<leader>fd",
-      function()
-        Snacks.picker.grep({
-          grep_command = {
-            "rg",
-            "--vimgrep",
-            "--type",
-            "dart",
-            "-g",
-            "!*.g.dart",
-            "-g",
-            "!*.freezed.dart",
-            "-g",
-            "!*.gr.dart",
-          },
-          cwd = "lib/",
-        })
-      end,
-      desc = "Search in Dart Files (lib/)",
-    },
-
-    {
-      "<leader>sf",
-      function()
-        local function detect_project_type()
-          local cwd = vim.fn.getcwd()
-
-          -- Check for pubspec.yaml (Flutter/Dart)
-          if vim.fn.filereadable(cwd .. "/pubspec.yaml") == 1 then
-            return "dart"
-          end
-
-          -- Check for go.mod (Go)
-          if vim.fn.filereadable(cwd .. "/go.mod") == 1 then
-            return "go"
-          end
-
-          return "generic"
-        end
-
-        local project_type = detect_project_type()
-        local grep_config = {}
-
-        if project_type == "dart" then
-          grep_config = {
-            grep_command = {
-              "rg",
-              "--vimgrep",
-              "--type",
-              "dart",
-              "-g",
-              "!*.g.dart",
-              "-g",
-              "!*.freezed.dart",
-            },
-            cwd = vim.fn.getcwd() .. "/lib",
-          }
-        elseif project_type == "go" then
-          grep_config = {
-            grep_command = {
-              "rg",
-              "--vimgrep",
-              "--maxdepth",
-              "1",
-              "--type",
-              "go",
-              "-g",
-              "!go.sum",
-              "-g",
-              "!go.mod",
-            },
-            cwd = vim.fn.getcwd(),
-          }
-        else
-          -- Fallback for other project types
-          grep_config = {
-            grep_command = {
-              "rg",
-              "--vimgrep",
-              "--maxdepth",
-              "1",
-            },
-            cwd = vim.fn.getcwd(),
-          }
-        end
-
-        Snacks.picker.grep(grep_config)
-      end,
-      desc = "Search in Project Files",
     },
   },
 }

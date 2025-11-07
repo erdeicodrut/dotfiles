@@ -1,8 +1,6 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 
-require("scrollbar").setup()
-
 -- Jumplist filtering - prevent pollution from small movements
 local function filter_jumplist()
   -- Commands that shouldn't add to jumplist
