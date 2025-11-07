@@ -31,3 +31,17 @@ vim.api.nvim_set_keymap("n", "U", "<C-r>", { noremap = true })
 -- built-in behaviour works again.
 
 pcall(vim.keymap.del, "n", "q")
+
+-- Delete LazyVim's default quit mappings
+pcall(vim.keymap.del, "n", "<leader>qq")
+
+-- Navigation shortcuts for quickfix, diagnostics, and git hunks
+vim.keymap.set("n", "<leader>q", "<cmd>cnext<CR>zz", { desc = "Next Quickfix" })
+vim.keymap.set("n", "<leader>d", function()
+  vim.diagnostic.goto_next()
+end, { desc = "Next Diagnostic" })
+vim.keymap.set("n", "<leader>h", function()
+  if vim.fn.exists(":Gitsigns") == 2 then
+    vim.cmd("Gitsigns next_hunk")
+  end
+end, { desc = "Next Git Hunk" })
