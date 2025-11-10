@@ -151,17 +151,10 @@ export SDKMAN_DIR="$HOME/.sdkman"
 alias sse="ssh servere@192.168.3.225"
 
 # Flutter
-alias f='flutter'
-alias fr='flutter run'
-alias fb='flutter build'
-alias ft='flutter test'
-alias fc='flutter clean'
-alias fd='flutter doctor'
-alias fp='flutter pub'
-alias fpg='flutter pub get'
-alias fpu='flutter pub upgrade'
-alias fpr='flutter pub run'
 alias fbr='flutter pub run build_runner build --delete-conflicting-outputs'
 alias fbrw='flutter pub run build_runner watch --delete-conflicting-outputs'
 
 
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    export TERM=xterm-256color
+fi
