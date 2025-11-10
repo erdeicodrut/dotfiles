@@ -2,7 +2,7 @@ return {
   -- Use LazyVim's Rust extras for base configuration
   { import = "lazyvim.plugins.extras.lang.rust" },
 
-  -- Override rustaceanvim with custom keybindings
+  -- Override rustaceanvim with custom keybindings and clippy settings
   {
     "mrcjkb/rustaceanvim",
     opts = {
@@ -33,6 +33,21 @@ return {
             vim.cmd.RustLsp("expandMacro")
           end, { desc = "Expand Macro", buffer = bufnr })
         end,
+        default_settings = {
+          ["rust-analyzer"] = {
+            -- Enable clippy with pedantic, nursery, and unwrap_used lints
+            checkOnSave = {
+              allFeatures = true,
+              command = "clippy",
+              extraArgs = {
+                "--",
+                "-Wclippy::pedantic",
+                "-Wclippy::nursery",
+                "-Wclippy::unwrap_used",
+              },
+            },
+          },
+        },
       },
     },
   },

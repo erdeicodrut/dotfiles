@@ -45,3 +45,12 @@ vim.keymap.set("n", "<leader>h", function()
     vim.cmd("Gitsigns next_hunk")
   end
 end, { desc = "Next Git Hunk" })
+
+-- Toggle diagnostic virtual text
+local virtual_text_enabled = true
+vim.keymap.set("n", "<leader>hw", function()
+  virtual_text_enabled = not virtual_text_enabled
+  vim.diagnostic.config({ virtual_text = virtual_text_enabled })
+  local status = virtual_text_enabled and "shown" or "hidden"
+  vim.notify("Diagnostic virtual text " .. status, vim.log.levels.INFO)
+end, { desc = "Toggle Warnings" })

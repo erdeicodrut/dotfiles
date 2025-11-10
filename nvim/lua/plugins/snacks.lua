@@ -8,6 +8,7 @@ return {
     },
     picker = { enabled = true },
     notifier = { enabled = true },
+    scroll = { enabled = false }, -- Disable smooth scrolling
   },
   keys = {
     -- Pickers
@@ -54,6 +55,13 @@ return {
         })
       end,
       desc = "File Explorer",
+    },
+    {
+      "<leader>o",
+      function()
+        Snacks.picker.git_files()
+      end,
+      desc = "Git Files",
     },
 
     -- Find
