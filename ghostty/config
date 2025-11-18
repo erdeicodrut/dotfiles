@@ -68,3 +68,7 @@ cursor-opacity = 0.4
 font-feature = "+calt,+dlig,+liga,+ss01,+ss02,+ss03"
 
 macos-titlebar-style = hidden
+
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true

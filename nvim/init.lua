@@ -42,3 +42,4 @@ filter_jumplist()
 -- Disable cursor movement on mouse scroll
 vim.keymap.set("", "<ScrollWheelUp>", "<C-Y>", { noremap = true, silent = true })
 vim.keymap.set("", "<ScrollWheelDown>", "<C-E>", { noremap = true, silent = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
