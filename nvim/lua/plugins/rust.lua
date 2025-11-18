@@ -41,9 +41,10 @@ return {
               command = "clippy",
               extraArgs = {
                 "--",
-                "-Wclippy::pedantic",
-                "-Wclippy::nursery",
-                "-Wclippy::unwrap_used",
+                "-Wclippy::all",
+                -- "-Wclippy::pedantic",
+                -- "-Wclippy::nursery",
+                -- "-Wclippy::unwrap_used",
               },
             },
           },
