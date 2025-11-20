@@ -10,6 +10,7 @@ ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
 ##### 🛣️ PATH + env
 # Add things safely; then de-duplicate with 'typeset -U path'
 path=(
+  "$HOME/.config/emacs/bin"
   "$HOME/fvm/default/bin"
   "$HOME/.cargo/bin"
   "$HOME/go/bin"
@@ -32,7 +33,7 @@ COMPLETION_WAITING_DOTS="true"
 
 plugins=(
   git
-  sudo
+  # sudo
   # Conditional ones (added only if installed):
   zsh-256color
   zsh-autosuggestions
