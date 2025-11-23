@@ -103,5 +103,5 @@ ctrl - f : yabai -m window --toggle zoom-fullscreen
 
 # ctrl - t : yabai -m space --toggle padding; yabai -m space --toggle gap
 
-ctrl - g : /Users/codrut/.config/yabai/toggle_padding 20%
+# ctrl - g : /Users/codrut/.config/yabai/toggle_padding 20%
 

@@ -6,40 +6,116 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
+(setq user-full-name "Codrut Erdei"
+      user-mail-address "codruterdei@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
+;;; Appearance
+;; Font configuration (from Ghostty config)
+(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 20))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;;; Editor Behavior
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;; High scrolloff like vim.opt.scrolloff = 30
+(setq scroll-margin 8
+      scroll-conservatively 101
+      scroll-preserve-screen-position t
+      maximum-scroll-margin 0.5)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
+;; Better undo settings
+(setq undo-limit 80000000
+      evil-want-fine-undo t)
+
+;; No highlight search (matching Neovim hlsearch = false)
+(after! evil
+  (setq evil-ex-search-persistent-highlight nil))
+
+;; Indentation settings (matching Neovim: 2 spaces)
+(setq-default tab-width 2
+              evil-shift-width 2
+              indent-tabs-mode nil)
+
+;; Text width (matching Neovim textwidth=120)
+(setq-default fill-column 120)
+
+;; Update time (matching Neovim updatetime=50)
+(setq idle-update-delay 0.05)
+(setq which-key-idle-delay 0.2)
+(setq which-key-idle-secondary-delay 0.2)
+
+;;; Centered Scrolling (matching Neovim C-d zz, C-u zz, n zz, N zz)
+
+(after! evil
+  (defun my/center-after-scroll ()
+    "Center screen after scrolling."
+    (evil-scroll-line-to-center nil))
+
+  ;; Center after half-page movements
+  (advice-add 'evil-scroll-down :after #'my/center-after-scroll)
+  (advice-add 'evil-scroll-up :after #'my/center-after-scroll)
+
+  ;; Center after search
+  (advice-add 'evil-search-next :after #'my/center-after-scroll)
+  (advice-add 'evil-search-previous :after #'my/center-after-scroll))
+
+;;; Keybindings (matching Neovim)
+
+(map!
+ ;; U for redo (matching Neovim keymap)
+ :n "U" #'evil-redo
+
+ ;; Move lines in visual mode (matching Neovim J/K in visual mode)
+ :v "J" (cmd! (evil-collection-unimpaired-move-text-down 1))
+ :v "K" (cmd! (evil-collection-unimpaired-move-text-up 1))
+
+ ;; Window navigation with C-hjkl (matching Neovim/tmux)
+ :n "C-h" #'evil-window-left
+ :n "C-j" #'evil-window-down
+ :n "C-k" #'evil-window-up
+ :n "C-l" #'evil-window-right
+
+ ;; Tab/buffer navigation with H/L
+ :n "H" #'previous-buffer
+ :n "L" #'next-buffer
+
+ ;; Paste without yanking in visual mode (like Neovim <leader>p)
+ :v "p" (cmd! (evil-use-register ?_) (evil-visual-paste nil))
+
+ ;; Avy jump with s (like flash.nvim)
+ :nvo "s" #'evil-avy-goto-char-timer
+
+ ;; LSP navigation (go to)
+ :n "gr" #'lsp-find-references
+ :n "gi" #'lsp-find-implementation
+ :n "gy" #'lsp-find-type-definition
+ :n "gD" nil  ; Disable gD
+
+ ;; Leader keybindings
+ :leader
+ :desc "Rename symbol" "rn" #'lsp-rename
+ :desc "Next quickfix" "q" #'next-error
+ :desc "Next diagnostic" "d" #'flycheck-next-error
+ :desc "Toggle diagnostics" "tw" #'flycheck-mode)
+
+(after! lsp-mode
+  (setq lsp-references-exclude-definition t))
+
+;;; Dired Configuration (Oil.nvim philosophy)
+
+(after! dired
+  ;; Better dired defaults
+  (setq dired-dwim-target t
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'always
+        delete-by-moving-to-trash t
+        dired-listing-switches "-alGhv --group-directories-first")
+
+  ;; Use wdired to edit dired buffers like Oil (C-c C-p to enable editing)
+  (setq wdired-allow-to-change-permissions t
+        wdired-create-parent-directories t))
+
+
+;;; If you use `org' and don't want your org files in the default location below,
+;;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
 
@@ -74,3 +150,24 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+(setq package-install-upgrade-built-in t)
+
+(after! vertico
+  (setq vertico-scroll-margin 0
+        vertico-count 20
+        vertico-resize t
+        vertico-cycle t))
+
+;; For fzf-like fuzzy matching
+(use-package! orderless
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+
+(map! :map dired-mode-map
+      :n "f" #'consult-find)
+
+
+(setq consult-preview-key 'any)  ; preview automatically

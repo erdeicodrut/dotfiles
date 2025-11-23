@@ -46,6 +46,21 @@ return {
                 "-Wclippy::unwrap_used",
               },
             },
+            -- Make rust-analyzer more resilient to dependency errors
+            cargo = {
+              -- Don't fail if build scripts fail
+              buildScripts = {
+                enable = true,
+                overrideCommand = nil,
+              },
+              -- Only check the workspace members, not dependencies
+              allTargets = false,
+            },
+            -- Don't load output directories from check, can cause issues with broken deps
+            procMacro = {
+              enable = true,
+              ignored = {},
+            },
           },
         },
       },

@@ -8,3 +8,4 @@ fish/.env
 karabiner/.DS_Store
 nvim/.DS_Store
 .DS_Store
+tmux

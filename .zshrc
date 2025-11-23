@@ -19,6 +19,7 @@ path=(
   "$HOME/Android/Sdk/cmdline-tools/latest/bin"
   "$HOME/Android/Sdk/platform-tools"
   "$HOME/Android/Sdk/tools/bin"
+  "/opt/homebrew/opt/coreutils/libexec/gnubin"
   $path
 )
 typeset -U path PATH
@@ -159,3 +160,6 @@ alias fbrw='flutter pub run build_runner watch --delete-conflicting-outputs'
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
     export TERM=xterm-256color
 fi
+
+
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
