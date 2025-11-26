@@ -81,7 +81,7 @@
  :v "p" (cmd! (evil-use-register ?_) (evil-visual-paste nil))
 
  ;; Avy jump with s (like flash.nvim)
- :nvo "s" #'evil-avy-goto-char-timer
+ :nvo "s" #'evil-avy-goto-char-2
 
  ;; LSP navigation (go to)
  :n "gr" #'lsp-find-references
@@ -171,3 +171,7 @@
 
 
 (setq consult-preview-key 'any)  ; preview automatically
+
+(after! orderless
+  (setq orderless-matching-styles
+        '(orderless-flex orderless-literal orderless-regexp)))

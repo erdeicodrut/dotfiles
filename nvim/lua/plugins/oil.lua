@@ -6,7 +6,6 @@ return {
     opts = {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
       default_file_explorer = true,
-      -- Id is automatically added at the beginning, and name at the end
       columns = {
         "icon",
         "permissions",
@@ -18,14 +17,13 @@ return {
         buflisted = false,
         bufhidden = "hide",
       },
-      -- Window-local options to use for oil buffers
       win_options = {
         wrap = false,
         signcolumn = "no",
         cursorcolumn = false,
         foldcolumn = "0",
         spell = false,
-        list = false,
+        list = true,
         conceallevel = 3,
         concealcursor = "nvic",
       },
@@ -50,14 +48,16 @@ return {
       -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
       keymaps = {
         ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
         ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-        ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
         ["<C-p>"] = "actions.preview",
         ["<C-c>"] = "actions.close",
-        ["<C-l>"] = "actions.refresh",
+        ["<r>"] = "actions.refresh",
         ["-"] = "actions.parent",
+        -- ["h"] = "actions.parent",
+        -- ["l"] = "actions.select",
+        ["<C-h>"] = false,
+        ["<C-l>"] = false,
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
         ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
@@ -66,23 +66,17 @@ return {
         ["g."] = "actions.toggle_hidden",
         ["g\\"] = "actions.toggle_trash",
       },
-      -- Set to false to disable all of the above keymaps
       use_default_keymaps = true,
       view_options = {
-        -- Show files and directories that start with "."
-        show_hidden = false,
-        -- This function defines what is considered a "hidden" file
+        show_hidden = true,
         is_hidden_file = function(name, bufnr)
           return vim.startswith(name, ".")
         end,
-        -- This function defines what will never be shown, even when `show_hidden` is set
         is_always_hidden = function(name, bufnr)
           return false
         end,
-        -- Sort file names in a more intuitive order for humans.
         natural_order = true,
         sort = {
-          -- sort order can be "asc" or "desc"
           { "type", "asc" },
           { "name", "asc" },
         },
@@ -143,7 +137,7 @@ return {
     },
     keys = {
       { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
-      { "<leader>-", "<cmd>Oil --float<cr>", desc = "Open parent directory in floating window" },
+      -- { "<leader>-", "<cmd>Oil --float<cr>", desc = "Open parent directory in floating window" },
     },
   },
 }

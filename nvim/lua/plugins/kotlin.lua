@@ -11,7 +11,7 @@ return {
 
   -- Ensure mason installs kotlin-language-server
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = { "kotlin-language-server" },
     },

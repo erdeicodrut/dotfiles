@@ -1,5 +1,5 @@
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -26,5 +26,9 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 vim.opt.textwidth = 120
+
+-- Disable modelines for security and to prevent parsing errors
+vim.opt.modeline = false
+vim.opt.modelines = 0
 
 vim.lsp.inlay_hint.enable(false)

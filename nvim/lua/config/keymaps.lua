@@ -54,3 +54,12 @@ vim.keymap.set("n", "<leader>hw", function()
   local status = virtual_text_enabled and "shown" or "hidden"
   vim.notify("Diagnostic virtual text " .. status, vim.log.levels.INFO)
 end, { desc = "Toggle Warnings" })
+
+-- Tab navigation
+vim.keymap.set("n", "<leader><tab>n", "<cmd>tabnext<CR>", { desc = "Next Tab" })
+vim.keymap.set("n", "<leader><tab>p", "<cmd>tabprevious<CR>", { desc = "Previous Tab" })
+
+-- Jump to specific tabs by number
+for i = 1, 9 do
+  vim.keymap.set("n", "<leader><tab>" .. i, "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
+end

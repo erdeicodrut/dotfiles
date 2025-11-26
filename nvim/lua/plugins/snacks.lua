@@ -3,9 +3,7 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
-    explorer = {
-      replace_netrw = true, -- Replace netrw with the snacks explorer
-    },
+    explorer = { enabled = false }, -- Disabled, using neo-tree instead
     picker = { enabled = true },
     notifier = { enabled = true },
     scroll = { enabled = false }, -- Disable smooth scrolling
@@ -39,22 +37,6 @@ return {
         Snacks.picker.lines()
       end,
       desc = "Buffer Lines",
-    },
-    {
-      "<leader>e",
-      function()
-        Snacks.explorer({
-          win = {
-            list = {
-              keys = {
-                ["<Right>"] = "confirm",
-                ["<Left>"] = "explorer_close",
-              },
-            },
-          },
-        })
-      end,
-      desc = "File Explorer",
     },
     {
       "<leader>o",
