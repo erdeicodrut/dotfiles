@@ -13,14 +13,6 @@
 ;; Font configuration (from Ghostty config)
 (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 20))
 
-;;; Editor Behavior
-
-;; High scrolloff like vim.opt.scrolloff = 30
-(setq scroll-margin 8
-      scroll-conservatively 101
-      scroll-preserve-screen-position t
-      maximum-scroll-margin 0.5)
-
 ;; Better undo settings
 (setq undo-limit 80000000
       evil-want-fine-undo t)
@@ -57,6 +49,39 @@
   (advice-add 'evil-search-next :after #'my/center-after-scroll)
   (advice-add 'evil-search-previous :after #'my/center-after-scroll))
 
+;;; Jumplist Filtering (matching Neovim keepjumps behavior)
+;; Prevent small movements from polluting the jumplist
+
+(after! evil
+  (defun my/evil-motion-no-jump (orig-fn &rest args)
+    "Execute motion without adding to jumplist."
+    (let ((evil--jumps-jumping t))  ; Trick evil into thinking we're already jumping
+      (apply orig-fn args)))
+
+  ;; Paragraph movements
+  (advice-add 'evil-backward-paragraph :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-forward-paragraph :around #'my/evil-motion-no-jump)
+
+  ;; Find char movements (f, F, t, T are handled via ; and ,)
+  (advice-add 'evil-find-char :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-find-char-backward :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-find-char-to :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-find-char-to-backward :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-repeat-find-char :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-repeat-find-char-reverse :around #'my/evil-motion-no-jump)
+
+  ;; Matching bracket
+  (advice-add 'evil-jump-item :around #'my/evil-motion-no-jump)
+
+  ;; Word search
+  (advice-add 'evil-search-word-forward :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-search-word-backward :around #'my/evil-motion-no-jump)
+
+  ;; Screen positions
+  (advice-add 'evil-window-top :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-window-middle :around #'my/evil-motion-no-jump)
+  (advice-add 'evil-window-bottom :around #'my/evil-motion-no-jump))
+
 ;;; Keybindings (matching Neovim)
 
 (map!
@@ -81,7 +106,7 @@
  :v "p" (cmd! (evil-use-register ?_) (evil-visual-paste nil))
 
  ;; Avy jump with s (like flash.nvim)
- :nvo "s" #'evil-avy-goto-char-2
+ :nv "s" #'evil-avy-goto-char-timer
 
  ;; LSP navigation (go to)
  :n "gr" #'lsp-find-references
@@ -175,3 +200,30 @@
 (after! orderless
   (setq orderless-matching-styles
         '(orderless-flex orderless-literal orderless-regexp)))
+
+;;; Disable Snippets (matching Neovim LSP-only completion)
+
+;; Disable yasnippet completely
+(after! yasnippet
+  (yas-global-mode -1))
+
+;; Configure corfu to only use LSP completion sources
+(after! corfu
+  ;; Disable snippet expansion in corfu
+  (setq corfu-auto t
+        corfu-auto-delay 0.1
+        corfu-auto-prefix 2
+        corfu-quit-no-match 'separator))
+
+;; Remove snippet backends from cape (corfu's completion-at-point extensions)
+(after! cape
+  ;; Only use LSP, file, and dabbrev - no snippets
+  (setq-default completion-at-point-functions
+                (list (cape-capf-buster #'lsp-completion-at-point)
+                      #'cape-file
+                      #'cape-dabbrev)))
+
+
+(setq deft-directory "~/Notes/"
+      deft-extensions '("org" "txt" "md")
+      deft-recursive t)

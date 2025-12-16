@@ -19,7 +19,9 @@ path=(
   "$HOME/Android/Sdk/cmdline-tools/latest/bin"
   "$HOME/Android/Sdk/platform-tools"
   "$HOME/Android/Sdk/tools/bin"
+  "$HOME/Android/Sdk/emulator"
   "/opt/homebrew/opt/coreutils/libexec/gnubin"
+  "$HOME/scripts"
   $path
 )
 typeset -U path PATH
@@ -150,16 +152,13 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
-alias sse="ssh servere@192.168.3.225"
-
-# Flutter
-alias fbr='flutter pub run build_runner build --delete-conflicting-outputs'
-alias fbrw='flutter pub run build_runner watch --delete-conflicting-outputs'
-
-
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
     export TERM=xterm-256color
 fi
 
 
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+
+eval $(thefuck --alias)
+
+alias lsusb="ioreg -p IOUSB"

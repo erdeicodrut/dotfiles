@@ -54,3 +54,5 @@ yabai -m signal --add event=window_moved action='echo "refresh windows" | nc -U 
 yabai -m signal --add event=window_resized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
 yabai -m signal --add event=window_minimized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
 yabai -m signal --add event=window_deminimized action='echo "refresh windows" | nc -U /tmp/yabai-indicator.socket'
+
+yabai -m config window_border off

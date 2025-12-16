@@ -45,6 +45,13 @@ return {
       end,
       desc = "Git Files",
     },
+    {
+      "<leader>.",
+      function()
+        Snacks.picker.files({ cwd = vim.fn.expand("%:p:h") })
+      end,
+      desc = "Find Files (Current Dir)",
+    },
 
     -- Find
     {

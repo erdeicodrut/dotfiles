@@ -55,3 +55,6 @@
 
 
 (package! tldr)
+
+(package! dired-open-with
+  :ensure t)
