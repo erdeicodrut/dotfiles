@@ -63,3 +63,10 @@ vim.keymap.set("n", "<leader><tab>p", "<cmd>tabprevious<CR>", { desc = "Previous
 for i = 1, 9 do
   vim.keymap.set("n", "<leader><tab>" .. i, "<cmd>tabnext " .. i .. "<CR>", { desc = "Go to Tab " .. i })
 end
+
+-- Copy absolute file path to clipboard
+vim.keymap.set("n", "<leader>yp", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied: " .. path, vim.log.levels.INFO)
+end, { desc = "Yank absolute file path" })

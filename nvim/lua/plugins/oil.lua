@@ -65,6 +65,18 @@ return {
         ["gx"] = "actions.open_external",
         ["g."] = "actions.toggle_hidden",
         ["g\\"] = "actions.toggle_trash",
+        ["yp"] = {
+          desc = "Yank absolute filepath",
+          callback = function()
+            local oil = require("oil")
+            local entry = oil.get_cursor_entry()
+            local dir = oil.get_current_dir()
+            if entry and dir then
+              local path = dir .. entry.name
+              vim.fn.setreg('"', path)
+            end
+          end,
+        },
       },
       use_default_keymaps = true,
       view_options = {

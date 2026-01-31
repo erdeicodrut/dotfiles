@@ -50,7 +50,7 @@ return {
             cargo = {
               -- Don't fail if build scripts fail
               buildScripts = {
-                enable = true,
+                enable = false,
                 overrideCommand = nil,
               },
               -- Only check the workspace members, not dependencies

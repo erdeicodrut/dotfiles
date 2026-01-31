@@ -39,7 +39,7 @@ return {
       desc = "Buffer Lines",
     },
     {
-      "<leader>o",
+      "<leader>g.",
       function()
         Snacks.picker.git_files()
       end,
