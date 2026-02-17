@@ -227,3 +227,16 @@
 (setq deft-directory "~/Notes/"
       deft-extensions '("org" "txt" "md")
       deft-recursive t)
+
+(use-package! soong-mode
+  :mode (("Android\\.bp\\'" . soong-mode)
+         ("\\.bp\\'"        . soong-mode)))
+
+(after! evil
+  (modify-syntax-entry ?_ "w")
+  (modify-syntax-entry ?- "w")
+  )
+
+(setq evil-want-change-word-to-end t)
+(setq evil-undo-system 'undo-tree)
+(setq evil-auto-indent t)

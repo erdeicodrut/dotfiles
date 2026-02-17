@@ -55,6 +55,6 @@
 
 
 (package! tldr)
+(package! soong-mode)
 
-(package! dired-open-with
-  :ensure t)
+(package! dired-open-with)

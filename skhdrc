@@ -1,5 +1,8 @@
 # open terminal
-cmd - return : open -na Ghostty 
+cmd - return : open -na Ghostty
+
+# open perpetual note in neovim on workspace w
+ctrl - n : yabai -m space --focus 6; /Applications/Ghostty.app/Contents/MacOS/ghostty -e ~/.config/scripts/perpetual-note.sh 
 
 cmd + alt - return : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app == "Ghostty") | .id' | head -n 1)
 

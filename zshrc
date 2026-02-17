@@ -1,9 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -12,7 +6,6 @@ export PATH=$HOME/fvm/default/bin:$PATH
 # export ANDROID_SDK_ROOT=$HOME/.android
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export JAVA_HOME=$HOME/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 
@@ -80,11 +73,12 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git sudo zsh-256color zsh-autosuggestions zsh-syntax-highlighting
+plugins=(
     git
+    sudo
+    zsh-256color
     zsh-autosuggestions
     fzf-tab
-    zsh-syntax-highlighting
     fast-syntax-highlighting
 )
 
@@ -168,19 +162,24 @@ eval "$(starship init zsh)"
 
 # history setup
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=10000
+SAVEHIST=10000
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
+setopt hist_ignore_space      # Commands starting with space don't go to history
+setopt hist_find_no_dups      # Don't show duplicates when searching
+setopt hist_reduce_blanks     # Remove extra whitespace
+setopt inc_append_history     # Write immediately, not on shell exit
 
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 
-fastfetch
+# Only run fastfetch for interactive login shells
+[[ -o login && -o interactive ]] && fastfetch
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
@@ -190,18 +189,9 @@ fastfetch
 
 # source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
-export SANUS=$HOME/Dev/blockshake/sanusapp-flutter
-export IDM=$HOME/Dev/blockshake/idm_flutter_app
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-alias fpg="flutter pub get"
-alias fg="flutter pub run build_runner build --delete-conflicting-outputs"
-alias gf="git fetch"
 
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-export JDK_HOME=$(/usr/libexec/java_home -v 17)
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.cargo/bin"
 
 # <<<<< Enable natural text editing
 #
@@ -221,34 +211,29 @@ bindkey "^[[3;3~" kill-word
 # Enable natural text editing >>>>>
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 
-[ -f "/Users/codruterdei/.ghcup/env" ] && . "/Users/codruterdei/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 # Rust env
 source $HOME/.cargo/env
 
+
 # Go env
 GOPATH=$HOME/go  PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 
-# Created by `pipx` on 2025-01-26 11:40:23
-export PATH="$PATH:/Users/codruterdei/.local/bin"
+# Local binaries
+export PATH="$PATH:$HOME/.local/bin"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/codruterdei/.lmstudio/bin"
+# LM Studio CLI
+export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # Add safety aliases
 alias grep='grep --max-count=1000'
 alias rg='rg --max-count=1000'
-export JAVA_HOME=$(/usr/libexec/java_home)
-export JAVA_HOME=""
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/codruterdei/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/codruterdei/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/codruterdei/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/codruterdei/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 
 export SERVER_URL=http://192.168.3.51:8080/
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"

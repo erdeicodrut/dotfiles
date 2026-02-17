@@ -202,4 +202,6 @@
        :config
        ;;literate
        (default +bindings +smartparens)
+
+       soong-mode
        )
