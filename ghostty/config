@@ -46,12 +46,12 @@ keybind = super+Digit8=text:\x00\x38
 keybind = super+Digit9=text:\x00\x39
 
 # Tmux keybinds - Window management
-keybind = super+t=text:\x00\x63  # New window (Ctrl+Space+c)
-keybind = super+p=text:\x00\x77  # Switch window via fzf (Ctrl+Space+w)
-keybind = super+r=text:\x00\x2c  # Rename window (Ctrl+Space+,)
-keybind = super+w=text:\x00\x78  # Close pane (Ctrl+Space+x)
-keybind = super+h=text:\x00\x70  # Previous window (Ctrl+Space+p)
-keybind = super+l=text:\x00\x6e  # Next window (Ctrl+Space+n)
-keybind = super+z=text:\x00\x7a  # Toggle zoom (Ctrl+Space+z)
+keybind = super+t=text:\x00\x63  
+keybind = super+p=text:\x00\x77  
+keybind = super+r=text:\x00\x2c  
+keybind = super+w=text:\x00\x78  
+keybind = super+h=text:\x00\x70  
+keybind = super+l=text:\x00\x6e  
+keybind = super+z=text:\x00\x7a  
 
 keybind = shift+enter=text:\n
