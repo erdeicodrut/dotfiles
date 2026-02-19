@@ -237,3 +237,11 @@ export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 
 export SERVER_URL=http://192.168.3.51:8080/
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+
+bindkey -v
+KEYTIMEOUT=1
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
