@@ -15,7 +15,6 @@ sudo yabai --load-sa
 yabai -m config \
   external_bar off:00:0 \
   menubar_opacity 1 \
-  mouse_follows_focus on \
   display_arrangement_order default \
   window_origin_display default \
   window_placement second_child \
@@ -27,17 +26,17 @@ yabai -m config \
   active_window_opacity 1.0 \
   normal_window_opacity 1.0 \
   window_opacity off \
-  insert_feedback_color 0xffd75f5f \
+  insert_feedback_color 0xff5f9bd7 \
   split_ratio 0.50 \
   split_type auto \
   auto_balance off \
-  top_padding 6 \
-  bottom_padding 6 \
-  left_padding 6 \
-  right_padding 6 \
-  window_gap 6 \
+  top_padding 0 \
+  bottom_padding 0 \
+  left_padding 0 \
+  right_padding 0 \
+  window_gap 0 \
   layout bsp \
-  mouse_modifier fn \
+  mouse_modifier cmd \
   mouse_action1 move \
   mouse_action2 resize \
   mouse_drop_action swap
