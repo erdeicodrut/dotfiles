@@ -2,6 +2,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      -- Disable codelens (keybindings removed in config below so <leader>cc stays compile mode)
+      codelens = { enabled = false },
       inlay_hints = { enabled = false },
       servers = {
         -- TypeScript/JavaScript

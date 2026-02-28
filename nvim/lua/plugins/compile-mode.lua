@@ -4,12 +4,12 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     {
-      "<leader>mc",
+      "<leader>cc",
       "<cmd>Compile<cr>",
       desc = "Compile",
     },
     {
-      "<leader>mr",
+      "<leader>cr",
       "<cmd>Recompile<cr>",
       desc = "Recompile",
     },
