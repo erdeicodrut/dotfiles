@@ -36,25 +36,22 @@ return {
           keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
           },
-          root_dir = function(fname)
-            return require("lspconfig.util").root_pattern(
-              "compile_commands.json",
-              "compile_flags.txt",
-              ".git",
-              "Makefile",
-              "configure.ac",
-              "configure.in",
-              "config.h.in",
-              "meson.build",
-              "meson_options.txt",
-              "build.ninja",
-              -- STM32 project markers
-              ".ioc",
-              ".mxproject",
-              ".uvprojx",
-              ".cproject"
-            )(fname) or vim.fn.getcwd()
-          end,
+          root_markers = {
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".git",
+            "Makefile",
+            "configure.ac",
+            "configure.in",
+            "config.h.in",
+            "meson.build",
+            "meson_options.txt",
+            "build.ninja",
+            ".ioc",
+            ".mxproject",
+            ".uvprojx",
+            ".cproject",
+          },
           capabilities = {
             offsetEncoding = { "utf-16" },
           },
